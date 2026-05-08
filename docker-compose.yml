@@ -1,0 +1,10 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-workshop
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=workshop_mongo_db
+    volumes:
+      - ./mongo-data:/data/db
