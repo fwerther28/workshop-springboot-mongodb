@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Docker & Security ###
+.env
+mongo-data/
+workshop-springboot-mongodb/
