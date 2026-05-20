@@ -2,6 +2,9 @@ package com.fwerther28.workshopmongodb.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,10 +15,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Document(collection = "user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@EqualsAndHashCode.Include
 	private String id;
 	private String name;
 	private String email;
