@@ -38,10 +38,14 @@ public class UserResources {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		
-		User obj = service.findById(id);
-		
-		UserDTO objDTO = new UserDTO(obj);
-		
-		return ResponseEntity.ok().body(objDTO);
+		try {
+				User obj = service.findById(id);
+				UserDTO objDTO = new UserDTO(obj);
+				return ResponseEntity.ok().body(objDTO);
+		}
+		catch (org.springframework.web.server.ResponseStatusException e) {
+			throw new org.springframework.web.server.ResponseStatusException(
+					e.getStatusCode(), e.getReason(), e);
+		}
 	}
 }

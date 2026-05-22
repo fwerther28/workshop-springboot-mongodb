@@ -23,6 +23,6 @@ public class UserService {
 	public User findById(String id) {
 		Optional<User> obj = repository.findById(id);
 		
-		return obj.orElseThrow(() -> new RuntimeException("Object not found"));
+		return obj.orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "Resource not found"));
 	}
 }
