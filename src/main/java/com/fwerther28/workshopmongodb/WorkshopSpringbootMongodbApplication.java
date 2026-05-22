@@ -9,5 +9,4 @@ public class WorkshopSpringbootMongodbApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WorkshopSpringbootMongodbApplication.class, args);
 	}
-
 }
