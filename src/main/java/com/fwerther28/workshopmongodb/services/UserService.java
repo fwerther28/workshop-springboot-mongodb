@@ -33,4 +33,9 @@ public class UserService {
 	public User fromDTO(com.fwerther28.workshopmongodb.dto.UserDTO objDTO) {
 		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
 	}
-}
+	
+	public void delete(String id) {
+		findById(id);
+		repository.deleteById(id);
+	}
+} 
