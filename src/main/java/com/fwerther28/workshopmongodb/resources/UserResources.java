@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fwerther28.workshopmongodb.domain.Post;
 import com.fwerther28.workshopmongodb.domain.User;
 import com.fwerther28.workshopmongodb.dto.UserDTO;
+import com.fwerther28.workshopmongodb.services.PostService;
 import com.fwerther28.workshopmongodb.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class UserResources {
 	
 	private final UserService service;
+	private final PostService postService;
 	
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> findAll() {
@@ -77,5 +80,11 @@ public class UserResources {
 		obj = service.update(id, obj);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value = "/titlesearch")
+	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+		List<Post> list = postService.findByTitle(text);
+		return ResponseEntity.ok().body(list);
 	}
 }
