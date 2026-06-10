@@ -1,8 +1,7 @@
 package com.fwerther28.workshopmongodb.config;
 
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Arrays;
-import java.util.TimeZone;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -10,13 +9,16 @@ import org.springframework.context.annotation.Configuration;
 import com.fwerther28.workshopmongodb.domain.Post;
 import com.fwerther28.workshopmongodb.domain.User;
 import com.fwerther28.workshopmongodb.dto.AuthorDTO;
+import com.fwerther28.workshopmongodb.dto.CommentDTO;
 import com.fwerther28.workshopmongodb.repository.PostRepository;
 import com.fwerther28.workshopmongodb.repository.UserRepository;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
+@Builder(builderMethodName = "builder")
 public class Instantiation implements CommandLineRunner {
 	
 	private final UserRepository userRepository;
@@ -25,9 +27,6 @@ public class Instantiation implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		userRepository.deleteAll();
 		postRepository.deleteAll();
@@ -38,8 +37,41 @@ public class Instantiation implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
-		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		CommentDTO c1 = CommentDTO.builder()
+						.text("Have a good trip, bro!")
+						.date(Instant.parse("2018-03-21T11:00:00Z"))
+						.author(new AuthorDTO(alex))
+						.build();
+		
+		CommentDTO c2 = CommentDTO.builder()
+				.text("Enjoy your time there!")
+				.date(Instant.parse("2018-03-23T15:30:00Z"))
+				.author(new AuthorDTO(bob))
+				.build();
+		
+		CommentDTO c3 = CommentDTO.builder()
+				.text("Have a wonderful day!")
+				.date(Instant.parse("2018-03-23T09:15:00Z"))
+				.author(new AuthorDTO(bob))
+				.build();
+		
+		Post post1 = Post.builder()
+							.date(Instant.parse("2018-03-21T10:00:00Z"))
+							.title("Off on a trip")
+							.body("Travelling to Sâo Paulo. See you around!")
+							.author(new AuthorDTO(maria))
+							.comment(c1)
+							.comment(c2)
+							.build();
+		
+		Post post2 = Post.builder()
+				.date(Instant.parse("2018-03-21T08:00:00Z"))
+				.title("Good morning")
+				.body("Woke up feeling great today")
+				.author(new AuthorDTO(maria))
+				.comment(c3)
+				.build();
+							
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		

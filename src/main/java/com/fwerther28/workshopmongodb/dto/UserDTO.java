@@ -10,7 +10,6 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
-@Setter
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
