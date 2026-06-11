@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fwerther28.workshopmongodb.domain.Post;
+import com.fwerther28.workshopmongodb.resources.util.URL;
 import com.fwerther28.workshopmongodb.services.PostService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,9 @@ public class PostResource {
 	
 	@GetMapping(value = "/titlesearch")
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+		
+		text = URL.decodeParam(text);
+		
 		List<Post> list = service.findByTitle(text);
 		return ResponseEntity.ok().body(list);
 	}
