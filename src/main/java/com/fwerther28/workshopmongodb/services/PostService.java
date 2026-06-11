@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fwerther28.workshopmongodb.domain.Post;
 import com.fwerther28.workshopmongodb.repository.PostRepository;
+import com.fwerther28.workshopmongodb.resources.exception.ObjectNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +19,7 @@ public class PostService {
 	
 	public Post findById(String id) {
 		Optional<Post> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new RuntimeException("Object not found"));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found. Id: " + id));
 	}
 	
 	public List<Post> findByTitle(String text) {

@@ -14,16 +14,15 @@ import com.fwerther28.workshopmongodb.services.PostService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping
+@RequestMapping(value = "/posts")
 @RequiredArgsConstructor
 public class PostResource {
 	
 	private final PostService service;
 	
-	@GetMapping(value = "/tittlesearch")
-	public ResponseEntity<List<Post>> findByTittle(@RequestParam(value = "text", defaultValue = "") String text) {
+	@GetMapping(value = "/titlesearch")
+	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
 		List<Post> list = service.findByTitle(text);
 		return ResponseEntity.ok().body(list);
 	}
-	
 }
